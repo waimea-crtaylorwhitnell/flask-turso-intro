@@ -38,8 +38,10 @@ def home():
     # TODO: Switch from SupaBase to Turso queries!
     # response = supabase.table("things").select().order("name").execute()
     # records = response.data
+    client = connect_db()
+    result = client.execute("SELECT * FROM things")
 
-    return render_template("pages/home.jinja", things=???)
+    return render_template("pages/home.jinja", things=result.rows[0])
 
 
 #-----------------------------------------------------------
@@ -48,7 +50,10 @@ def home():
 @app.get("/thing/<int:id>")
 def showThing(id):
 
-    return render_template("pages/thing.jinja", thing=???)
+    client = connect_db()
+    result = client.execute("SELECT * FROM things WHERE id=?", [id])
+
+    return render_template("pages/thing.jinja", thing=result)
 
 
 #-----------------------------------------------------------
