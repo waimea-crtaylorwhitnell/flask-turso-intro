@@ -37,4 +37,30 @@
 
     </section>
 
+    <section>
+        <article>
+            <form>
+                <label>
+                    Name 
+                    <input type="text" name="name" required>
+                </label>
+
+                <label>
+                    Description
+                    <input type="text" name="description" required>
+                </label>
+
+                <label>
+                    Cost $ 
+                    <input type="number" name="cost" min="0" required>
+                </label>
+
+                <label>
+                    Rating 
+                    <input type="number" name="rating" min="0" max="5" required>
+                </label>
+            </form>
+        </article>
+    </section>
+
 {% endblock %}

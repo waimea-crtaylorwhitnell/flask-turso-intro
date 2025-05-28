@@ -1,5 +1,6 @@
 from flask          import Flask
 from flask          import render_template
+from flask          import redirect
 from libsql_client  import create_client_sync
 from dotenv         import load_dotenv
 import os
@@ -41,7 +42,7 @@ def home():
     client = connect_db()
     result = client.execute("SELECT * FROM things")
 
-    return render_template("pages/home.jinja", things=result.rows[0])
+    return render_template("pages/home.jinja", things=result.rows)
 
 
 #-----------------------------------------------------------
@@ -53,7 +54,7 @@ def showThing(id):
     client = connect_db()
     result = client.execute("SELECT * FROM things WHERE id=?", [id])
 
-    return render_template("pages/thing.jinja", thing=result)
+    return render_template("pages/thing.jinja", thing=result.rows)
 
 
 #-----------------------------------------------------------
@@ -61,10 +62,10 @@ def showThing(id):
 #-----------------------------------------------------------
 @app.get("/delete/<int:id>")
 def deleteThing(id):
+    client = connect_db()
+    client.execute("DELETE FROM things WHERE id=?", [id])
 
-    # TODO!!!!
-
-    return
+    return redirect("/")
 
 
 #-----------------------------------------------------------
